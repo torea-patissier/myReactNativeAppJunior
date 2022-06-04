@@ -24,17 +24,41 @@ export const AuthProvider = ({children}) => {
         password,
       })
       .then(res => {
+        console.log(res);
         let userInfo = res.data;
         setUserInfo(userInfo);
-        AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+        AsyncStorage.setItem('REGISTER OK', JSON.stringify(userInfo));
         setIsLoading(false);
         console.log(userInfo);
+        console.log(res.status);
+
       })
       .catch(e => {
-        console.log(`register error ${e}`);
+        console.log(`REGISTER ERROR ${e}`);
         setIsLoading(false);
       });
 
+  };
+
+  const login = (email, password) => {
+    setIsLoading(true);
+
+    axios
+      .post(`${BASE_URL}/authentication_token`, {
+        email,
+        password,
+      })
+      .then(res => {
+        let userInfo = res.data;
+        console.log(userInfo);
+        setUserInfo(userInfo);
+        AsyncStorage.setItem('LOGIN OK', JSON.stringify(userInfo));
+        setIsLoading(false);
+      })
+      .catch(e => {
+        console.log(`LOGIN ERROR ${e}`);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -45,7 +69,7 @@ export const AuthProvider = ({children}) => {
         userInfo,
         // splashLoading,
         register,
-        // login,
+        login,
         // logout,
       }}>
       {children}

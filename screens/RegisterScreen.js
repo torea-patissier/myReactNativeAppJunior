@@ -52,7 +52,7 @@ const RegisterScreen = ({ navigation }) => {
       <TouchableOpacity
         style={globalStyle.boutonConfirmation}
         onPress={() => {
-          myContext.register(firstname,lastname,email,password);
+          myContext.register(firstname,lastname,email,password)
         }}
       >
         <Text style={globalStyle.textConfirmation}>Sign in</Text>

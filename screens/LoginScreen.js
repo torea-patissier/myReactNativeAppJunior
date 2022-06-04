@@ -1,5 +1,5 @@
 import { Text, View, TextInput, Button, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { globalStyle } from "../styles/AppStyles";
 import Spinner from 'react-native-loading-spinner-overlay';
 import {AuthContext} from '../context/AuthContext';
@@ -12,7 +12,7 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={globalStyle.container}>
-    {/* <Spinner visible={isLoading} /> */}
+    <Spinner visible={isLoading} />
     <View style={globalStyle.container2}>
       <Text>Login form</Text>
 
