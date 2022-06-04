@@ -1,18 +1,23 @@
 import { Text, View, TextInput, Button, TouchableOpacity } from "react-native";
 import React, { useState, useContext } from "react";
 import { globalStyle } from "../styles/AppStyles";
-import { AuthContext } from "../context/Context";
+import { AuthContext } from "../context/AuthContext";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const RegisterScreen = ({ navigation }) => {
+
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  console.log('NAVIGATION REGISTER',navigation);
-  // const {register,isLoading} = useContext(AuthContext);
+
+  // console.log('NAVIGATION REGISTER',navigation);
+  const myContext = useContext(AuthContext);
 
   return (
     <View style={globalStyle.container}>
+      {/* <Spinner visible={isLoading} /> */}
+    <View style={globalStyle.container2}>
       <Text>Register form</Text>
       {/* <Spinner visible={isLoading} /> */}
       <TextInput
@@ -41,12 +46,13 @@ const RegisterScreen = ({ navigation }) => {
         value={password}
         onChangeText={(text) => setPassword(text)}
         style={globalStyle.input}
+        secureTextEntry
       />
 
       <TouchableOpacity
         style={globalStyle.boutonConfirmation}
         onPress={() => {
-          register();
+          myContext.register(firstname,lastname,email,password);
         }}
       >
         <Text style={globalStyle.textConfirmation}>Sign in</Text>
@@ -55,12 +61,12 @@ const RegisterScreen = ({ navigation }) => {
       <View style={globalStyle.lienTxt}>
         <Text>Already have an account? </Text>
         <TouchableOpacity
-        onPress={() => {navigation.navigate("Login")}}
+        onPress={() => {navigation.replace("Login")}}
         >
           <Text style={globalStyle.lien}>Login</Text>
         </TouchableOpacity>
       </View>
-
+    </View>
     </View>
   );
 };

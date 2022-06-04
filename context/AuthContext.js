@@ -1,6 +1,6 @@
-import React, {createContext, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import React, {createContext, useState} from 'react';
 import {BASE_URL} from '../config';
 
 export const AuthContext = createContext();
@@ -9,11 +9,10 @@ export const AuthProvider = ({children}) => {
 
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
   /**
    * Inscription
    */
-  const register = (firstname, lastname, email, password) => {
+  const register = (firstname,lastname,email,password) => {
 
     setIsLoading(true);
 
@@ -35,16 +34,22 @@ export const AuthProvider = ({children}) => {
         console.log(`register error ${e}`);
         setIsLoading(false);
       });
+
   };
 
   return (
+
     <AuthContext.Provider
       value={{
         isLoading,
         userInfo,
+        // splashLoading,
         register,
+        // login,
+        // logout,
       }}>
       {children}
     </AuthContext.Provider>
+    
   );
-}
+};

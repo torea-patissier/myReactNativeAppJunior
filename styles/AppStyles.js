@@ -8,19 +8,29 @@ export const globalStyle = StyleSheet.create({
         justifyContent: 'center',
         width:'100%',
     },
+
+    container2: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width:'100%',
+        backgroundColor:'dodgerblue',
+        marginTop:'25%',
+        borderRadius: '25%',
+    },
     
     input: {
-        margin: 12,
-        borderWidth: 1,
-        padding: 20,
+        margin: 10,
+        padding: 18,
         borderRadius:5,
         width:'80%',
+        backgroundColor: 'white',
     },
 
     boutonConfirmation: {
-        margin: 12,
+        margin: 10,
         borderWidth: 1,
-        padding: 15,
+        padding: 18,
         borderRadius:5,
         width:'80%',
         backgroundColor: 'blue',
@@ -33,7 +43,8 @@ export const globalStyle = StyleSheet.create({
     },
 
     lien: {
-        color: 'blue',
+        color: 'white',
+        fontWeight:'bold',
     },
 
     lienTxt:{
