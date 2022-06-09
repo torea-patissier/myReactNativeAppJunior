@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationRouteContext } from '@react-navigation/native';
 import axios from 'axios';
-import React, {createContext, useState} from 'react';
+import React, {createContext, useState, useEffect} from 'react';
 import {BASE_URL} from '../config';
 
 export const AuthContext = createContext();
@@ -9,6 +10,8 @@ export const AuthProvider = ({children}) => {
 
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [splashLoading, setSplashLoading] = useState(false);
+
   /**
    * Inscription
    */
@@ -24,14 +27,12 @@ export const AuthProvider = ({children}) => {
         password,
       })
       .then(res => {
-        console.log(res);
         let userInfo = res.data;
         setUserInfo(userInfo);
         AsyncStorage.setItem('REGISTER OK', JSON.stringify(userInfo));
         setIsLoading(false);
         console.log(userInfo);
         console.log(res.status);
-
       })
       .catch(e => {
         console.log(`REGISTER ERROR ${e}`);
@@ -61,16 +62,61 @@ export const AuthProvider = ({children}) => {
       });
   };
 
+  const logout = () => {
+    setIsLoading(true);
+
+    axios
+      .post(
+        `${BASE_URL}/logout`,
+        {},
+        {
+          headers: {Authorization: `Bearer ${userInfo.access_token}`},
+        },
+      )
+      .then(res => {
+        console.log(res.data);
+        AsyncStorage.removeItem('userInfo');
+        setUserInfo({});
+        setIsLoading(false);
+      })
+      .catch(e => {
+        console.log(`logout error ${e}`);
+        setIsLoading(false);
+      });
+  };
+
+  const isLoggedIn = async () => {
+    try {
+      setSplashLoading(true);
+
+      let userInfo = await AsyncStorage.getItem('userInfo');
+      userInfo = JSON.parse(userInfo);
+
+      if (userInfo) {
+        setUserInfo(userInfo);
+      }
+
+      setSplashLoading(false);
+    } catch (e) {
+      setSplashLoading(false);
+      console.log(`is logged in error ${e}`);
+    }
+  };
+
+  useEffect(() => {
+    isLoggedIn();
+  }, []);
+
   return (
 
     <AuthContext.Provider
       value={{
         isLoading,
         userInfo,
-        // splashLoading,
+        splashLoading,
         register,
         login,
-        // logout,
+        logout,
       }}>
       {children}
     </AuthContext.Provider>

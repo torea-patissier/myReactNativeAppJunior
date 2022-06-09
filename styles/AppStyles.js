@@ -15,8 +15,8 @@ export const globalStyle = StyleSheet.create({
         justifyContent: 'center',
         width:'100%',
         backgroundColor:'dodgerblue',
-        marginTop:'25%',
-        borderRadius: '25%',
+        marginTop:'50%',
+        borderRadius: '47%',
     },
     
     input: {
@@ -33,7 +33,7 @@ export const globalStyle = StyleSheet.create({
         padding: 18,
         borderRadius:5,
         width:'80%',
-        backgroundColor: 'blue',
+        backgroundColor: 'black',
     },
 
     textConfirmation: {

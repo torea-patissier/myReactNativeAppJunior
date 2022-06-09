@@ -3,6 +3,8 @@ import React, { useState, useContext } from "react";
 import { globalStyle } from "../styles/AppStyles";
 import { AuthContext } from "../context/AuthContext";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { Form, TextValidator } from 'react-native-validator-form';
+import { useValidation } from "react-simple-form-validator";
 
 const RegisterScreen = ({ navigation }) => {
 
@@ -19,6 +21,7 @@ const RegisterScreen = ({ navigation }) => {
       {/* <Spinner visible={isLoading} /> */}
     <View style={globalStyle.container2}>
       <Text>Register form</Text>
+
       {/* <Spinner visible={isLoading} /> */}
       <TextInput
         placeholder="Firstname"
@@ -39,6 +42,8 @@ const RegisterScreen = ({ navigation }) => {
         value={email}
         onChangeText={(text) => setEmail(text)}
         style={globalStyle.input}
+        validators={['required', 'isEmail']}
+        errorMessages={['This field is required']}
       />
 
       <TextInput
@@ -52,7 +57,7 @@ const RegisterScreen = ({ navigation }) => {
       <TouchableOpacity
         style={globalStyle.boutonConfirmation}
         onPress={() => {
-          myContext.register(firstname,lastname,email,password)
+          myContext.register(firstname,lastname,email,password) == 200 ? navigation.navigate('Login'):''
         }}
       >
         <Text style={globalStyle.textConfirmation}>Sign in</Text>
